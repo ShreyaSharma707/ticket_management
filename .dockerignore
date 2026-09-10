@@ -7,6 +7,5 @@ coverage
 *.md
 !README.md
 tests
-scripts
 data
 *.db

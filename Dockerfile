@@ -13,6 +13,8 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
 COPY src ./src
+COPY public ./public
+COPY scripts ./scripts
 
 RUN mkdir -p data && chown -R appuser:appgroup /app
 
