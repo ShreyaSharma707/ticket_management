@@ -61,8 +61,8 @@ jobs:
           context: .
           push: ${{ secrets.DOCKERHUB_USERNAME != '' }}
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME != '' && format('{0}/{1}:latest', secrets.DOCKERHUB_USERNAME, env.IMAGE_NAME) || format('{0}:latest', env.IMAGE_NAME) }}
+            ${{ secrets.DOCKERHUB_USERNAME != '' && format('{0}/{1}:{2}', secrets.DOCKERHUB_USERNAME, env.IMAGE_NAME, github.sha) || format('{0}:{1}', env.IMAGE_NAME, github.sha) }}
 
   deploy:
     name: Deploy to EC2
