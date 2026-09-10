@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "Helpdesk API",
+    "description": "Ticket management API collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@helpdesk.dev\",\n  \"password\": \"password123\",\n  \"name\": \"Jane Customer\"\n}"
+            },
+            "url": "{{baseUrl}}/api/register"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('token', pm.response.json().token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@helpdesk.dev\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "List Tickets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/tickets"
+          }
+        },
+        {
+          "name": "Create Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Unable to login\",\n  \"description\": \"Getting 500 error on login\",\n  \"priority\": \"HIGH\"\n}"
+            },
+            "url": "{{baseUrl}}/api/tickets"
+          }
+        },
+        {
+          "name": "Get Ticket",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/api/tickets/1"
+          }
+        },
+        {
+          "name": "Update Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}"
+            },
+            "url": "{{baseUrl}}/api/tickets/1/status"
+          }
+        },
+        {
+          "name": "Assign Ticket",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assigneeId\": 2\n}"
+            },
+            "url": "{{baseUrl}}/api/tickets/1/assign"
+          }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"body\": \"Still experiencing this issue.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/tickets/1/comments"
+          }
+        }
+      ]
+    }
+  ]
+}

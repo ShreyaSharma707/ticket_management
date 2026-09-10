@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f1e8" />
+  <title>Helpdesk | Support cockpit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section class="auth-screen" id="auth-screen">
+      <div class="auth-art">
+        <div class="eyebrow">NORTHSTAR SUPPORT / 01</div>
+        <div class="art-copy">
+          <span class="art-line"></span>
+          <p>Make every customer<br /><strong>feel found.</strong></p>
+        </div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="art-footer">TICKET OPERATIONS<br />FOR TEAMS THAT CARE</div>
+      </div>
+      <div class="auth-panel">
+        <div class="brand-mark"><span>↗</span> northstar</div>
+        <div class="auth-heading">
+          <p class="kicker" id="auth-kicker">Customer portal</p>
+          <h1 id="auth-title">Bring your issue<br /><em>into focus.</em></h1>
+          <p class="muted" id="auth-copy">Raise a ticket, follow its progress, and keep the conversation in one place.</p>
+        </div>
+        <div class="auth-tabs">
+          <button class="tab active" data-auth-mode="login">Sign in</button>
+          <button class="tab" data-auth-mode="register">Create account</button>
+        </div>
+        <form id="auth-form" class="stack-form">
+          <label class="register-only hidden">Your name<input name="name" autocomplete="name" placeholder="Jane Customer" /></label>
+          <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@company.com" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" required minlength="6" /></label>
+          <button class="primary-button" type="submit"><span id="auth-submit-label">Enter cockpit</span><span>↗</span></button>
+          <p class="form-error" id="auth-error"></p>
+        </form>
+        <p class="role-links"><a href="/user">User login</a><span>/</span><a href="/admin">Admin login</a></p>
+        <p class="demo-hint">Demo accounts use password <code>password123</code></p>
+      </div>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard">
+      <aside class="sidebar">
+        <div class="brand-mark"><span>↗</span> northstar</div>
+        <div class="workspace-label">WORKSPACE</div>
+        <button class="nav-item active" id="overview-nav"><span class="nav-icon">▦</span> <span id="workspace-nav-label">My requests</span> <span class="nav-count" id="nav-count">0</span></button>
+        <button class="nav-item" id="new-ticket-nav"><span class="nav-icon">＋</span> <span id="new-ticket-nav-label">New ticket</span></button>
+        <div class="sidebar-spacer"></div>
+        <a class="docs-link" href="/api/docs" target="_blank"><span>⌁</span> API documentation</a>
+        <div class="profile-chip">
+          <div class="avatar" id="user-avatar">JC</div>
+          <div><strong id="user-name">Jane Customer</strong><small id="user-role">user</small></div>
+          <button id="logout-button" title="Sign out">↪</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div><p class="kicker" id="workspace-kicker">CUSTOMER WORKSPACE / TICKETS</p><h2 id="workspace-heading">Good morning, <span id="greeting-name">Jane</span>.</h2></div>
+          <button class="primary-button compact" id="new-ticket-button"><span>＋</span> New ticket</button>
+        </header>
+
+        <div class="dashboard-body">
+          <section class="overview-strip">
+            <div class="intro-copy"><span class="section-number">01</span><div><h3 id="overview-title">My ticket overview</h3><p id="overview-copy">Stay close to the conversations that matter.</p></div></div>
+            <div class="metric"><span>ALL TICKETS</span><strong id="metric-total">0</strong></div>
+            <div class="metric accent"><span>NEEDS ATTENTION</span><strong id="metric-open">0</strong></div>
+            <div class="metric"><span>RESOLVED</span><strong id="metric-resolved">0</strong></div>
+          </section>
+
+          <section class="toolbar">
+            <div class="search-wrap"><span>⌕</span><input id="search-input" placeholder="Search tickets by title or description" /></div>
+            <select id="status-filter"><option value="">All statuses</option><option value="OPEN">Open</option><option value="IN_PROGRESS">In progress</option><option value="PENDING">Pending</option><option value="RESOLVED">Resolved</option><option value="CLOSED">Closed</option></select>
+            <select id="priority-filter"><option value="">All priorities</option><option value="CRITICAL">Critical</option><option value="URGENT">Urgent</option><option value="HIGH">High</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select>
+          </section>
+
+          <section class="content-grid">
+            <div class="ticket-column">
+              <div class="list-heading"><h3>Recent tickets</h3><span id="results-label">0 results</span></div>
+              <div id="ticket-list" class="ticket-list"></div>
+              <div id="empty-state" class="empty-state hidden"><span>○</span><h3>Nothing here yet.</h3><p>Try adjusting the filters or start a new conversation.</p></div>
+            </div>
+            <aside class="detail-panel" id="detail-panel"><div class="detail-placeholder"><span>↗</span><p>Select a ticket<br />to see the full story.</p></div></aside>
+          </section>
+        </div>
+      </main>
+    </section>
+
+    <div class="modal-backdrop hidden" id="ticket-modal">
+      <div class="modal">
+        <button class="modal-close" data-close-modal>×</button>
+        <p class="kicker">Create a new conversation</p><h2>What can we help<br /><em>untangle?</em></h2>
+        <form id="ticket-form" class="stack-form">
+          <label>Subject<input name="title" placeholder="Short description of the issue" required /></label>
+          <label>Category<select name="category"><option>Account</option><option>Billing</option><option>Technical</option><option>Access</option><option>Feature request</option><option>General</option></select></label>
+          <label>Priority<select name="priority"><option value="MEDIUM">Medium</option><option value="LOW">Low</option><option value="HIGH">High</option><option value="CRITICAL">Critical</option><option value="URGENT">Urgent</option></select></label>
+          <label>Details<textarea name="description" rows="5" placeholder="Tell us what happened..." required></textarea></label>
+          <button class="primary-button" type="submit">Send ticket <span>↗</span></button><p class="form-error" id="ticket-error"></p>
+        </form>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+  </div>
+  <script src="/dashboard.js"></script>
+</body>
+</html>
