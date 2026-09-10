@@ -10,8 +10,8 @@
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "seed": "node scripts/seed.js",
-    "test": "jest --runInBand --forceExit",
-    "test:coverage": "jest --runInBand --forceExit --coverage",
+    "test": "NODE_ENV=test jest --runInBand --forceExit",
+    "test:coverage": "NODE_ENV=test jest --runInBand --forceExit --coverage",
     "docker:build": "docker build -t helpdesk-api .",
     "docker:run": "docker compose up --build",
     "docker:down": "docker compose down"
