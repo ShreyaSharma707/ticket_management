@@ -77,7 +77,7 @@ jobs:
     name: Deploy to EC2
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && vars.EC2_DEPLOY_ENABLED == 'true'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && vars.EC2_DEPLOY_ENABLED == 'true' && secrets.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
